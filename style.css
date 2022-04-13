@@ -102,8 +102,7 @@ main {
     border-radius: 5px;
     box-shadow: 0 1px 0 #091e4240;
     max-width: 300px;
-    min-height: 20px;
-    margin: 8px auto 0 auto;
+    min-height: 120px;
 }
 
 #quick-card-newCard {
@@ -215,7 +214,7 @@ main {
         sans-serif;
 }
 
-#user,
+.user,
 #date,
 #quick-card-user,
 #quick-card-date,
@@ -226,7 +225,7 @@ main {
     background-color: #d6ede2;
     color: #13854e;
 }
-#user,
+.user,
 #quick-card-user,
 #user-select {
     color: #2d86ba;
@@ -236,7 +235,8 @@ main {
     display: flex;
     justify-content: space-around;
 }
-#user-select,#quick-card-user {
+#user-select,
+#quick-card-user {
     border-color: transparent;
     appearance: none;
     text-align: center;
@@ -247,7 +247,50 @@ main {
         sans-serif;
 }
 
-option{
+#user-select option,
+#quick-card-user option {
     background-color: white;
     color: black;
+}
+
+.point,
+#quick-card-point,
+#point-select {
+    width: 40px;
+    border-radius: 4px;
+    margin: 0 5px;
+    outline: none;
+    appearance: none;
+    border: none;
+    display: block;
+    height: 8px;
+}
+
+.yellow {
+    background-color: #f2d600;
+}
+
+.red {
+    background-color: #eb5a46;
+}
+
+.blue,
+#point-select {
+    background-color: #0079bf;
+}
+
+.green {
+    background-color: #61bd4f;
+}
+.selected{
+    background-color: #000;
+}
+
+.footer-box{
+    min-height: 60px;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
