@@ -20,20 +20,20 @@ document.getElementById('root').innerHTML = `
         <button id="confirm-form">✚</button>
         <button id="close-form">✖</button>
         </div>
-        <div id="footer-box__add" class='footer-box'></div>
+        <div id="add" class='footer-box'></div>
     </div>
     <div class="list-wrapper inprogress">
         <div class="head-box">
             <p class="head-box-description">In Progress</p>
         </div>
-        <div class="footer-box"></div>
+        <div class="footer-box" id='inprogress'></div>
     </div>
     <div class="list-wrapper done">
         <div class="head-box">
             <p class="head-box-description">Done</p>
             <button id="delete-all-button"></button>
         </div>
-        <div class="footer-box"></div>
+        <div class="footer-box" id='done'></div>
     </div>
 </div>
 </main>
@@ -59,7 +59,7 @@ document.getElementById('root').innerHTML = `
 // объявляем переменные
 const input = document.getElementById('todo-description');
 const titleText = document.getElementById('title-input');
-const cardFooter = document.getElementById('footer-box__add');
+const cardFooter = document.getElementById('add');
 let todoItemsElems = [];
 // Генерация даты
 let date = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
@@ -102,7 +102,6 @@ const localUpdate = () => {
     // counters();
 }
 function printUsers(json) {
-    console.log(json);
     json.forEach(i => {
         document.getElementById('user-select').innerHTML += `<option>${i.name}</option>`
         document.getElementById('quick-card-user').innerHTML += `<option>${i.name}</option>`
@@ -124,11 +123,10 @@ const htmlText = () => {
         todoItemsElems = document.querySelectorAll('.newCard');
     }
     localUpdate()
-    console.log(todoItemsElems);
+    dragNdrop()
 }
 htmlText()
 getUsers()
-dragNdrop()
 // Функция проверяет наличие текста в инпуте, далее записывает значение в объект из которого берется значение
 // обнуляет инпут
 document.getElementById('confirm-form').addEventListener('click', () => {
@@ -227,7 +225,8 @@ document.getElementById('point-select').addEventListener('change', function () {
 })
 
 let draggedItem = null;
-
+let doneArray = [];
+let progArray = [];
 function dragNdrop() {
     const items = document.querySelectorAll('.newCard');
     const lists = document.querySelectorAll('.footer-box');
@@ -250,13 +249,43 @@ function dragNdrop() {
                 e.preventDefault();
                 this.style.border = 'none';
             })
-            list.addEventListener('drop', function () {
+            list.addEventListener('drop', function (e) {
+                e.preventDefault();
                 this.style.border = 'none';
                 this.append(draggedItem);
+                if (this.id == 'done') {
+                    if(item === draggedItem) {
+                        doneArray.push(draggedItem);
+                        if(cardArray.find(()=>draggedItem)) return cardArray.splice(draggedItem, 1);
+                        if(progArray.find(()=>draggedItem)) return progArray.splice(draggedItem, 1);
+                    }
+                }
+                if (this.id == 'inprogress') { 
+                    if(item === draggedItem) {
+                        progArray.push(draggedItem);
+                        if(cardArray.find(()=>draggedItem)) return cardArray.splice(draggedItem, 1);
+                        if(doneArray.find(()=>draggedItem)) return doneArray.splice(draggedItem, 1);
+                    } 
+                }
+                if (this.id == 'add') { 
+                    if(item === draggedItem) {
+                        cardArray.push(draggedItem);
+                        if(progArray.find(()=>draggedItem)) return progArray.splice(draggedItem, 1);
+                        if(doneArray.find(()=>draggedItem)) return doneArray.splice(draggedItem, 1);
+                    } 
+                }
+                // htmlText()
+                console.log('darggedItem', draggedItem);
+                console.log('list', list);
+                console.log('item', item);
+                console.log('cardArray', cardArray);
+                console.log('progArray', progArray);
+                console.log('doneArray', doneArray);
             })
         }
     }
 }
+
 
 
 
