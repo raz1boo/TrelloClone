@@ -1,0 +1,454 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  background-color: #026aa7;
+  position: sticky;
+  top: 0;
+  align-items: center;
+}
+header .logo {
+  background-image: url(../assets/icons/logo.gif);
+  height: 2rem;
+  width: 7rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+header .header_tools {
+  width: 22rem;
+  display: flex;
+  justify-content: right;
+  gap: 2rem;
+  max-height: 2.5rem;
+  align-items: center;
+}
+header .header_tools button {
+  color: white;
+  transition-property: background-color, border-color, box-shadow;
+  transition: 0.1s;
+  transition-timing-function: ease;
+  background-color: transparent;
+  border-radius: 0.2142857143rem;
+  border: none;
+  cursor: pointer;
+  padding: 0.287rem;
+  height: 2rem;
+  width: 2rem;
+}
+header .header_tools button img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+header .header_tools button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+header .header_tools input {
+  border-radius: 0.2142857143rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  width: 18rem;
+  background-image: url(../assets/icons/loupe-white.png);
+  background-repeat: no-repeat;
+  background-position: 1rem;
+  padding-left: 2.5rem;
+  color: #172b4d;
+  transition: 0.2s;
+}
+header .header_tools input:hover, header .header_tools input:focus {
+  background-color: rgba(255, 255, 255, 0.7);
+  background-image: url(../assets/icons/loupe.png);
+  color: #172b4d;
+}
+header .header_tools input:hover::placeholder, header .header_tools input:focus::placeholder {
+  color: #172b4d;
+}
+header .header_tools input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.yellow {
+  background-color: #f2d600;
+}
+
+.red {
+  background-color: #eb5a46;
+}
+
+.blue {
+  background-color: #0079bf;
+}
+
+.green {
+  background-color: #61bd4f;
+}
+
+main {
+  background-color: #0079bf;
+  border-top: 1px solid transparent;
+  height: 94.5%;
+}
+main .wrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+}
+main .wrapper .list-wrapper {
+  width: 18.7rem;
+  border-radius: 0.2142857143rem;
+  background-color: #ebecf0;
+  padding: 0.5rem;
+}
+main .wrapper .list-wrapper .head-box {
+  color: #172b4d;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+main .wrapper .list-wrapper #delete-all-button {
+  height: 1.5rem;
+  width: 1.7rem;
+  border: none;
+  border-radius: 0.2142857143rem;
+  transition: 0.2s;
+}
+main .wrapper .list-wrapper #delete-all-button:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper #delete-all-button img {
+  height: 1.2rem;
+  width: 1rem;
+}
+main .wrapper .list-wrapper > button {
+  width: 17rem;
+  display: block;
+  border-radius: 0.2142857143rem;
+  color: #172b4d;
+  font-size: 2rem;
+  background-color: transparent;
+  margin: auto;
+  border: none;
+  transition: 0.2s;
+}
+main .wrapper .list-wrapper > button:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper #description-box {
+  margin: auto;
+  width: 17rem;
+  text-align: center;
+  border-radius: 0.2142857143rem;
+  margin-top: 0.5rem;
+  background-color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.2509803922);
+  display: none;
+}
+main .wrapper .list-wrapper #description-box #close-form,
+main .wrapper .list-wrapper #description-box #confirm-form {
+  height: 2rem;
+  width: 2rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 0.2142857143rem;
+}
+main .wrapper .list-wrapper #description-box #close-form:hover,
+main .wrapper .list-wrapper #description-box #confirm-form:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper #description-box #point-select {
+  outline: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background-color: #0079bf;
+}
+main .wrapper .list-wrapper #description-box #description_title_input {
+  border-radius: 0.2142857143rem;
+  margin-top: 0.5rem;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: transparent;
+  width: 16rem;
+  outline: none;
+  transition: 0.3s;
+  color: #172b4d;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+main .wrapper .list-wrapper #description-box #description_title_input:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper #description-box #description_title_input::placeholder {
+  color: #172b4d;
+}
+main .wrapper .list-wrapper #description-box #todo-description {
+  border-radius: 0.2142857143rem;
+  padding: 0.5rem;
+  border: none;
+  width: 16rem;
+  min-height: 9rem;
+  resize: none;
+  color: #172b4d;
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  overflow-y: hidden;
+  transition: 0.3s;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+main .wrapper .list-wrapper #description-box #todo-description:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper #description-box #todo-description::placeholder {
+  color: #172b4d;
+}
+main .wrapper .list-wrapper #description-box #user-select {
+  border-color: transparent;
+  appearance: none;
+  width: 11rem;
+  outline: none;
+  cursor: pointer;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+main .wrapper .list-wrapper #description-box #user-select option {
+  background-color: white;
+  color: black;
+}
+main .wrapper .list-wrapper .user {
+  border-radius: 0.2142857143rem;
+  padding: 0.2142857143rem 0.5rem;
+  background-color: #d6ede2;
+  color: #13854e;
+  font-size: 0.83rem;
+  display: inline;
+  text-align: center;
+}
+main .wrapper .list-wrapper .point {
+  width: 2.5rem;
+  border-radius: 0.25rem;
+  height: 0.5rem;
+  display: block;
+}
+main .wrapper .list-wrapper .footer-box {
+  min-height: 4rem;
+  border-radius: 0.2142857143rem;
+  width: 17rem;
+  margin: 0.5rem auto 0 auto;
+  padding: 0.5rem;
+  border: 0.2rem dashed transparent;
+  transition: 0.2s;
+}
+main .wrapper .list-wrapper .footer-box:hover {
+  border-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper .newCard {
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.2509803922);
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.2142857143rem;
+  margin-bottom: 0.5rem;
+}
+main .wrapper .list-wrapper .newCard .card-header {
+  display: flex;
+  justify-content: space-between;
+}
+main .wrapper .list-wrapper .newCard .card-header .title-description {
+  overflow-wrap: break-word;
+  width: 11rem;
+  text-align: left;
+  padding: 0.5rem;
+}
+main .wrapper .list-wrapper .newCard .card-header .title-header-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+main .wrapper .list-wrapper .newCard .card-header .title-header-buttons .button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 0.2142857143rem;
+  height: 2rem;
+  width: 2rem;
+  transition: 0.2s;
+}
+main .wrapper .list-wrapper .newCard .card-header .title-header-buttons .button:hover {
+  background-color: rgba(9, 30, 66, 0.0784313725);
+}
+main .wrapper .list-wrapper .newCard .todo-value {
+  padding: 0.5rem;
+  width: 15rem;
+  height: 7rem;
+  font-size: 1rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+main .wrapper .list-wrapper .newCard .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+main .wrapper .list-wrapper .newCard .card-footer .card-user,
+main .wrapper .list-wrapper .newCard .card-footer .card-date {
+  border-radius: 0.2142857143rem;
+  padding: 0.27rem;
+  font-size: 0.8rem;
+  display: inline;
+  text-align: center;
+  color: #13854e;
+  background-color: #d6ede2;
+}
+main .wrapper .list-wrapper .newCard .card-footer .card-date {
+  color: #2d86ba;
+  background-color: #ceecfd;
+}
+
+#quick-card-editor {
+  background: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  display: none;
+}
+#quick-card-editor #quick-card-editor-close-card {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+#quick-card-editor #quick-card-editor-close-icon {
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition-duration: 0.15s;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+#quick-card-editor #quick-card-editor-close-icon::before {
+  content: "✖";
+}
+#quick-card-editor #quick-card-editor-card {
+  position: absolute;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-title {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 16rem;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0.2142857143rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-text {
+  padding: 0.5rem;
+  border: none;
+  width: 16rem;
+  height: 15rem;
+  resize: none;
+  font-size: 1rem;
+  outline: none;
+  border-radius: 0.2142857143rem;
+  cursor: pointer;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-text::-webkit-scrollbar {
+  width: 0.5rem;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-text::-webkit-scrollbar-track {
+  background-color: #ecedf0;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-text::-webkit-scrollbar-thumb {
+  background-color: #cfd3da;
+  border-radius: 0.2142857143rem;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard #quick-card-point {
+  width: 2.5rem;
+  border-radius: 0.25rem;
+  height: 0.5rem;
+  display: block;
+  outline: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .card-footer #quick-card-user,
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .card-footer #quick-card-date {
+  border-radius: 0.2142857143rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  color: #2d86ba;
+  background-color: #ceecfd;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .card-footer #quick-card-user {
+  color: #13854e;
+  background-color: #d6ede2;
+  border-color: transparent;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+#quick-card-editor #quick-card-editor-card #quick-card-newCard .card-footer #quick-card-user option {
+  background-color: white;
+  color: black;
+}
+#quick-card-editor #quick-card-editor-card #card-editor-button-confirm {
+  background-color: #0079bf;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.2142857143rem;
+  transition: 0.2s;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+#quick-card-editor #quick-card-editor-card #card-editor-button-confirm:hover {
+  background-color: #2d86ba;
+}

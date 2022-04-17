@@ -1,0 +1,459 @@
+$br3: 0.214285714286rem;
+$bc: #172b4d;
+$rem5: 0.5rem;
+$c91: #091e4214;
+* {
+    box-sizing: border-box;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+        sans-serif;
+}
+body,
+html {
+    margin: 0;
+    height: 100%;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: $rem5 2rem;
+    background-color: #026aa7;
+    position: sticky;
+    top: 0;
+    align-items: center;
+    .logo {
+        background-image: url(../assets/icons/logo.gif);
+        height: 2rem;
+        width: 7rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    .header_tools {
+        width: 22rem;
+        display: flex;
+        justify-content: right;
+        gap: 2rem;
+        max-height: 2.5rem;
+        align-items: center;
+        button {
+            color: white;
+            transition-property: background-color, border-color, box-shadow;
+            transition: 0.1s;
+            transition-timing-function: ease;
+            background-color: transparent;
+            border-radius: $br3;
+            border: none;
+            cursor: pointer;
+            padding: 0.287rem;
+            height: 2rem;
+            width: 2rem;
+            img {
+                height: 1.5rem;
+                width: 1.5rem;
+            }
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+        }
+        input {
+            border-radius: $br3;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            outline: none;
+            padding: $rem5;
+            width: 18rem;
+            background-image: url(../assets/icons/loupe-white.png);
+            background-repeat: no-repeat;
+            background-position: 1rem;
+            padding-left: 2.5rem;
+            color: $bc;
+            transition: 0.2s;
+            &:hover,
+            &:focus {
+                background-color: rgba(255, 255, 255, 0.7);
+                background-image: url(../assets/icons/loupe.png);
+                color: $bc;
+                &::placeholder {
+                    color: $bc;
+                }
+            }
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+}
+.yellow {
+    background-color: #f2d600;
+}
+
+.red {
+    background-color: #eb5a46;
+}
+
+.blue {
+    background-color: #0079bf;
+}
+
+.green {
+    background-color: #61bd4f;
+}
+main {
+    background-color: #0079bf;
+    border-top: 1px solid transparent;
+    height: 94.5%;
+    .wrapper {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 32px;
+        .list-wrapper {
+            width: 18.7rem;
+            border-radius: $br3;
+            background-color: #ebecf0;
+            padding: $rem5;
+            .head-box {
+                color: $bc;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+            #delete-all-button {
+                height: 1.5rem;
+                width: 1.7rem;
+                border: none;
+                border-radius: $br3;
+                transition: 0.2s;
+                &:hover {
+                    background-color: $c91;
+                }
+                img {
+                    height: 1.2rem;
+                    width: 1rem;
+                }
+            }
+            > button {
+                width: 17rem;
+                display: block;
+                border-radius: $br3;
+                color: $bc;
+                font-size: 2rem;
+                background-color: transparent;
+                margin: auto;
+                border: none;
+                transition: 0.2s;
+                &:hover {
+                    background-color: $c91;
+                }
+            }
+            #description-box {
+                margin: auto;
+                width: 17rem;
+                text-align: center;
+                border-radius: $br3;
+                margin-top: $rem5;
+                background-color: #fff;
+                padding: $rem5;
+                display: flex;
+                justify-content: space-between;
+                box-shadow: 0 1px 0 #091e4240;
+                display: none;
+                #close-form,
+                #confirm-form {
+                    height: 2rem;
+                    width: 2rem;
+                    background-color: transparent;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    transition: 0.2s;
+                    border-radius: $br3;
+                    &:hover {
+                        background-color: $c91;
+                    }
+                }
+                #point-select {
+                    outline: none;
+                    appearance: none;
+                    border: none;
+                    cursor: pointer;
+                    background-color: #0079bf;
+                }
+                #description_title_input {
+                    border-radius: $br3;
+                    margin-top: $rem5;
+                    border: none;
+                    padding: $rem5;
+                    font-size: 1rem;
+                    background-color: transparent;
+                    width: 16rem;
+                    outline: none;
+                    transition: 0.3s;
+                    color: $bc;
+                    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                        Verdana, sans-serif;
+                    &:hover {
+                        background-color: $c91;
+                    }
+                    &::placeholder {
+                        color: $bc;
+                    }
+                }
+                #todo-description {
+                    border-radius: $br3;
+                    padding: $rem5;
+                    border: none;
+                    width: 16rem;
+                    min-height: 9rem;
+                    resize: none;
+                    color: $bc;
+                    font-size: 1rem;
+                    background-color: transparent;
+                    outline: none;
+                    overflow-y: hidden;
+                    transition: 0.3s;
+                    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                        Verdana, sans-serif;
+                    &:hover {
+                        background-color: $c91;
+                    }
+                    &::placeholder {
+                        color: $bc;
+                    }
+                }
+                #user-select {
+                    border-color: transparent;
+                    appearance: none;
+                    width: 11rem;
+                    outline: none;
+                    cursor: pointer;
+                    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                        Verdana, sans-serif;
+                    option {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+            .user {
+                border-radius: $br3;
+                padding: $br3 $rem5;
+                background-color: #d6ede2;
+                color: #13854e;
+                font-size: 0.83rem;
+                display: inline;
+                text-align: center;
+            }
+            .point {
+                width: 2.5rem;
+                border-radius: 0.25rem;
+                height: $rem5;
+                display: block;
+            }
+            .footer-box {
+                min-height: 4rem;
+                border-radius: $br3;
+                width: 17rem;
+                margin: $rem5 auto 0 auto;
+                padding: $rem5;
+                border: 0.2rem dashed transparent;
+                transition: 0.2s;
+                &:hover {
+                    border-color: $c91;
+                }
+            }
+            .newCard {
+                box-shadow: 0 1px 0 #091e4240;
+                background-color: #fff;
+                padding: $rem5;
+                border-radius: $br3;
+                margin-bottom: 0.5rem;
+                .card-header {
+                    display: flex;
+                    justify-content: space-between;
+                    .title-description {
+                        overflow-wrap: break-word;
+                        width: 11rem;
+                        text-align: left;
+                        padding: 0.5rem;
+                    }
+                    .title-header-buttons {
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        .button {
+                            border: none;
+                            background-color: white;
+                            cursor: pointer;
+                            font-size: 1.5rem;
+                            border-radius: $br3;
+                            height: 2rem;
+                            width: 2rem;
+                            transition: 0.2s;
+                            &:hover {
+                                background-color: $c91;
+                            }
+                        }
+                    }
+                }
+                .todo-value {
+                    padding: 0.5rem;
+                    width: 15rem;
+                    height: 7rem;
+                    font-size: 1rem;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                }
+                .card-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    .card-user,
+                    .card-date {
+                        border-radius: $br3;
+                        padding: 0.27rem;
+                        font-size: 0.8rem;
+                        display: inline;
+                        text-align: center;
+                        color: #13854e;
+                        background-color: #d6ede2;
+                    }
+                    .card-date {
+                        color: #2d86ba;
+                        background-color: #ceecfd;
+                    }
+                }
+            }
+        }
+    }
+}
+#quick-card-editor {
+    background: #0009;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    display: none;
+    #quick-card-editor-close-card {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+    }
+    #quick-card-editor-close-icon {
+        color: #fff9;
+        padding: 0.5rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition-duration: 0.15s;
+        width: 3rem;
+        height: 3rem;
+        font-size: 2rem;
+        cursor: pointer;
+        &::before {
+            content: "\2716";
+        }
+    }
+    #quick-card-editor-card {
+        position: absolute;
+        #quick-card-newCard {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            .quick-card-title {
+                border: none;
+                padding: 0.5rem;
+                font-size: 1rem;
+                width: 16rem;
+                outline: none;
+                cursor: pointer;
+                border-radius: $br3;
+                font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                    Verdana, sans-serif;
+            }
+            .quick-card-text {
+                padding: 0.5rem;
+                border: none;
+                width: 16rem;
+                height: 15rem;
+                resize: none;
+                font-size: 1rem;
+                outline: none;
+                border-radius: $br3;
+                cursor: pointer;
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                    Verdana, sans-serif;
+                &::-webkit-scrollbar {
+                    width: 0.5rem;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: #ecedf0;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: #cfd3da;
+                    border-radius: $br3;
+                }
+            }
+            #quick-card-point {
+                width: 2.5rem;
+                border-radius: 0.25rem;
+                height: $rem5;
+                display: block;
+                outline: none;
+                appearance: none;
+                border: none;
+                cursor: pointer;
+            }
+            .card-footer {
+                display: flex;
+                justify-content: space-between;
+                #quick-card-user,
+                #quick-card-date {
+                    border-radius: $br3;
+                    padding: 0.2rem 0.5rem;
+                    font-size: 0.8rem;
+                    color: #2d86ba;
+                    background-color: #ceecfd;
+                }
+                #quick-card-user {
+                    color: #13854e;
+                    background-color: #d6ede2;
+                    border-color: transparent;
+                    appearance: none;
+                    outline: none;
+                    cursor: pointer;
+                    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva,
+                        Verdana, sans-serif;
+                    & option {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+        }
+        #card-editor-button-confirm {
+            background-color: #0079bf;
+            border: none;
+            box-shadow: none;
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            border-radius: $br3;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            &:hover {
+                background-color: #2d86ba;
+            }
+        }
+    }
+}
