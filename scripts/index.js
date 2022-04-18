@@ -103,11 +103,31 @@ const createTemplate = (inp, index) => {
 `
 }
 //
-const localUpdate = () => {
+const localUpdate = (index) => {
     localStorage.setItem('cardArray', JSON.stringify(cardArray));
     localStorage.setItem('id', id);
-    // counters();
-}
+    // cardArray.forEach((item,index)=>{
+        fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(cardArray[index])
+    })
+        fetch(`https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array/${index+1}`,{
+        method: 'DELETE',
+    })
+    // })
+    // cardArray.forEach((item,index)=>{
+        fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(cardArray[index])
+    })
+    // });
+};
 function printUsers(json) {
     json.forEach(i => {
         document.getElementById('user-select').innerHTML += `<option>${i.name}</option>`
@@ -130,11 +150,11 @@ const htmlText = () => {
             if (cardArray[index].position == 'add') addFooter.innerHTML += createTemplate(item, index);
             if (cardArray[index].position == 'inprogress') inprogressFooter.innerHTML += createTemplate(item, index);
             if (cardArray[index].position == 'done') doneFooter.innerHTML += createTemplate(item, index);
+            localUpdate(index);
         });
         todoItemsElems = document.querySelectorAll('.newCard');
     }
     dragNdrop();
-    localUpdate();
 }
 dragNdrop();
 htmlText()

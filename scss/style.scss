@@ -11,6 +11,7 @@ body,
 html {
     margin: 0;
     height: 100%;
+    background-color: #0079bf;
 }
 header {
     display: flex;
@@ -99,9 +100,7 @@ header {
     background-color: #61bd4f;
 }
 main {
-    background-color: #0079bf;
     border-top: 1px solid transparent;
-    height: 94.5%;
     .wrapper {
         margin-top: 1rem;
         display: flex;
@@ -125,6 +124,7 @@ main {
                 border: none;
                 border-radius: $br3;
                 transition: 0.2s;
+                cursor: pointer;
                 &:hover {
                     background-color: $c91;
                 }

@@ -8,6 +8,7 @@ body,
 html {
   margin: 0;
   height: 100%;
+  background-color: #0079bf;
 }
 
 header {
@@ -98,9 +99,7 @@ header .header_tools input::placeholder {
 }
 
 main {
-  background-color: #0079bf;
   border-top: 1px solid transparent;
-  height: 94.5%;
 }
 main .wrapper {
   margin-top: 1rem;
@@ -127,9 +126,10 @@ main .wrapper .list-wrapper #delete-all-button {
   border: none;
   border-radius: 0.2142857143rem;
   transition: 0.2s;
+  cursor: pointer;
 }
 main .wrapper .list-wrapper #delete-all-button:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper #delete-all-button img {
   height: 1.2rem;
@@ -147,7 +147,7 @@ main .wrapper .list-wrapper > button {
   transition: 0.2s;
 }
 main .wrapper .list-wrapper > button:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper #description-box {
   margin: auto;
@@ -159,7 +159,7 @@ main .wrapper .list-wrapper #description-box {
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.2509803922);
+  box-shadow: 0 1px 0 #091e4240;
   display: none;
 }
 main .wrapper .list-wrapper #description-box #close-form,
@@ -175,7 +175,7 @@ main .wrapper .list-wrapper #description-box #confirm-form {
 }
 main .wrapper .list-wrapper #description-box #close-form:hover,
 main .wrapper .list-wrapper #description-box #confirm-form:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper #description-box #point-select {
   outline: none;
@@ -198,7 +198,7 @@ main .wrapper .list-wrapper #description-box #description_title_input {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 main .wrapper .list-wrapper #description-box #description_title_input:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper #description-box #description_title_input::placeholder {
   color: #172b4d;
@@ -219,7 +219,7 @@ main .wrapper .list-wrapper #description-box #todo-description {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 main .wrapper .list-wrapper #description-box #todo-description:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper #description-box #todo-description::placeholder {
   color: #172b4d;
@@ -261,10 +261,10 @@ main .wrapper .list-wrapper .footer-box {
   transition: 0.2s;
 }
 main .wrapper .list-wrapper .footer-box:hover {
-  border-color: rgba(9, 30, 66, 0.0784313725);
+  border-color: #091e4214;
 }
 main .wrapper .list-wrapper .newCard {
-  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.2509803922);
+  box-shadow: 0 1px 0 #091e4240;
   background-color: #fff;
   padding: 0.5rem;
   border-radius: 0.2142857143rem;
@@ -296,7 +296,7 @@ main .wrapper .list-wrapper .newCard .card-header .title-header-buttons .button 
   transition: 0.2s;
 }
 main .wrapper .list-wrapper .newCard .card-header .title-header-buttons .button:hover {
-  background-color: rgba(9, 30, 66, 0.0784313725);
+  background-color: #091e4214;
 }
 main .wrapper .list-wrapper .newCard .todo-value {
   padding: 0.5rem;
@@ -329,7 +329,7 @@ main .wrapper .list-wrapper .newCard .card-footer .card-date {
 }
 
 #quick-card-editor {
-  background: rgba(0, 0, 0, 0.6);
+  background: #0009;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -345,7 +345,7 @@ main .wrapper .list-wrapper .newCard .card-footer .card-date {
   z-index: 0;
 }
 #quick-card-editor #quick-card-editor-close-icon {
-  color: rgba(255, 255, 255, 0.6);
+  color: #fff9;
   padding: 0.5rem;
   position: absolute;
   right: 0;
