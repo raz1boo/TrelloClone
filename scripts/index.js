@@ -3,8 +3,8 @@ document.body.innerHTML = `
 <header>
 <a href="#" class="logo"></a>
 <div class="header_tools">
-    <input type="text" placeholder="Search..">
-    <button><img src="../assets/icons/gear.png"></button>
+    <input type="text" placeholder="Search.." id='search'>
+    <button id='settings-button'><img src="../assets/icons/gear.png"></button>
 </div>
 </header>
 <main>
@@ -59,6 +59,38 @@ document.body.innerHTML = `
 </div>
 <span id="quick-card-editor-close-icon"></span>
 </div>
+<div id="board-menu-wrapper">
+<div class="board-menu-header">
+    Settings
+    <button id='close-button-board-menu'>✖</button>
+</div>
+<hr class="board-menu-header-divider">
+<div class="board-menu-list">
+    <div id="board-menu-box">
+        <div id="mini-display-bg"></div>
+    <p>Change background..</p>
+    </div>
+    <div id="background-scroll-box">
+        <div class="background-image-box">
+            <div id="background-image-small-box" class='small-box'></div>
+            <p>Photos</p>
+        </div>
+        <div class="background-color-box">
+            <div id="background-color-small-box" class='small-box'></div>
+            <p>Colors</p>
+        </div>
+    </div>
+    <div id="background-images-scroll-box"></div>
+    <div id="background-colors-scroll-box">
+        <div class="blue small-box" id='#0079bf'></div>
+        <div class="yellow small-box" id='#f2d600'></div>
+        <div class="green small-box" id='#61bd4f'></div>
+        <div class="red small-box" id='#eb5a46'></div>
+        <div class="purple small-box" id='#89609E'></div>
+        <div class="pink small-box" id='#cd5a91'></div>
+    </div>
+</div>
+</div>
 `
 // объявляем переменные
 const input = document.getElementById('todo-description');
@@ -69,15 +101,30 @@ const doneFooter = document.getElementById('done');
 let todoItemsElems = [];
 // Генерация даты
 let date = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().getFullYear()}`;
-// Объявление переменных для localStorage
-let cardArray = JSON.parse(localStorage.getItem('cardArray')) || [];
-let id = JSON.parse(localStorage.getItem('id')) || 0;
+let id = 0;
+let cardArray = [];
+let previousCardArray = [];
+let backgroundColor = JSON.parse(localStorage.getItem('bg')) || ["#0079bf"];
+document.body.style.backgroundColor = `${backgroundColor}`;
+document.body.style.backgroundImage = `${backgroundColor}`;
+async function getData() {
+    await fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array')
+        .then(response => response.json())
+        .then(json => {
+            cardArray = [];
+            json.forEach(i => {
+                cardArray.push(i);
+            })
+            htmlText();
+            console.log('getData', cardArray);
+        })
+}
 // Создание объекта с нужными значениями
 function todo(val, id, tit, us, point) {
-    this.id = id;
+    this.objectId = id;
     this.date = date;
-    this.text = val;
     this.title = tit;
+    this.text = val;
     this.user = us;
     this.point = point;
     this.position = 'add';
@@ -103,62 +150,75 @@ const createTemplate = (inp, index) => {
 `
 }
 //
-const localUpdate = (index) => {
-    localStorage.setItem('cardArray', JSON.stringify(cardArray));
-    localStorage.setItem('id', id);
-    // cardArray.forEach((item,index)=>{
-        fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(cardArray[index])
-    })
-        fetch(`https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array/${index+1}`,{
-        method: 'DELETE',
-    })
-    // })
-    // cardArray.forEach((item,index)=>{
-        fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(cardArray[index])
-    })
-    // });
+const localUpdate = async (flag) => {
+    let condition = flag ? previousCardArray.length : cardArray.length;
+
+    for (let i = 1; i <= condition; i++) {
+        await fetch(`https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array/${i}`, {
+                method: 'DELETE',
+            })
+            .then(response => console.log('response', response.json()))
+    }
+
+    for (let i = 0; i < cardArray.length; i++) {
+        await fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(cardArray[i])
+        })
+        console.log('localUpdateLength', cardArray.length);
+        console.log('post', i);
+    }
 };
+
 function printUsers(json) {
     json.forEach(i => {
         document.getElementById('user-select').innerHTML += `<option>${i.name}</option>`
         document.getElementById('quick-card-user').innerHTML += `<option>${i.name}</option>`
     })
 }
+
+function printBgs(json){
+    json.forEach(i=>{
+        document.getElementById('background-images-scroll-box').innerHTML += `<div class='small-box' style='background-image: url(${i.download_url})'></div>`
+    })
+}
+
 function getUsers() {
     fetch('https://jsonplaceholder.typicode.com/users/')
         .then(response => response.json())
-        .then(json => { printUsers(json) })
+        .then(json => {
+            printUsers(json)
+        })
+    fetch(`https://picsum.photos/v2/list?page=2&limit=100`)
+        .then(response => response.json())
+        .then(json => {
+            printBgs(json)
+        })
+
 }
 // Функция сохраняет значения в localStorage и задает текст блоков(при перезагрузке страницы и не только)
 // проверяет наличие 'блока' в массиве и выводит его(заново прорисовывает все блоки из массива, при удалении, при добавлении)
-const htmlText = () => {
+const htmlText = (flag) => {
     addFooter.innerText = '';
     inprogressFooter.innerText = '';
     doneFooter.innerText = '';
+    console.log('htmlTextLength', cardArray.length);
     if (cardArray.length > 0) {
         cardArray.forEach((item, index) => {
             if (cardArray[index].position == 'add') addFooter.innerHTML += createTemplate(item, index);
             if (cardArray[index].position == 'inprogress') inprogressFooter.innerHTML += createTemplate(item, index);
             if (cardArray[index].position == 'done') doneFooter.innerHTML += createTemplate(item, index);
-            localUpdate(index);
         });
         todoItemsElems = document.querySelectorAll('.newCard');
     }
+    localUpdate(flag);
     dragNdrop();
 }
-dragNdrop();
-htmlText()
-getUsers()
+getData();
+getUsers();
 // Функция проверяет наличие текста в инпуте, далее записывает значение в объект из которого берется значение
 // обнуляет инпут
 document.getElementById('confirm-form').addEventListener('click', () => {
@@ -193,10 +253,14 @@ document.querySelector('textarea').addEventListener('input', function () {
 })
 // функция удаляет блок, удаляет из массива этот блок
 const deleteTask = index => {
+    previousCardArray = [...cardArray];
+    console.log('previousCardArray', previousCardArray);
     cardArray.splice(index, 1);
-    if (cardArray == 0) id = 0;
-    htmlText()
+    // if (cardArray.length == 0) id = 0;
+    console.log('deleteTaskLength', cardArray.length);
+    htmlText('delete');
 }
+
 function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     return {
@@ -218,10 +282,15 @@ const editTask = index => {
     document.getElementById('quick-card-newCard').style.boxShadow = 'none';
     document.getElementById('quick-card-point').style.backgroundColor = `${cardArray[index].point}`;
     document.getElementById('quick-card-point').addEventListener('change', function () {
-        if (this.value == '#f2d600') { this.style.cssText = 'background-color: #f2d600;' }
-        else if (this.value == '#0079bf') { this.style.cssText = 'background-color: #0079bf;' }
-        else if (this.value == '#eb5a46') { this.style.cssText = 'background-color: #eb5a46;' }
-        else if (this.value == '#61bd4f') { this.style.cssText = 'background-color: #61bd4f;' }
+        if (this.value == '#f2d600') {
+            this.style.cssText = 'background-color: #f2d600;'
+        } else if (this.value == '#0079bf') {
+            this.style.cssText = 'background-color: #0079bf;'
+        } else if (this.value == '#eb5a46') {
+            this.style.cssText = 'background-color: #eb5a46;'
+        } else if (this.value == '#61bd4f') {
+            this.style.cssText = 'background-color: #61bd4f;'
+        }
     })
     document.getElementById('quick-card-editor').style.display = 'block';
 }
@@ -244,13 +313,19 @@ const confirmChangesCard = index => {
     }
 }
 document.getElementById('point-select').addEventListener('change', function () {
-    if (this.value == '#f2d600') { this.style.cssText = 'background-color: #f2d600;' }
-    else if (this.value == '#0079bf') { this.style.cssText = 'background-color: #0079bf;' }
-    else if (this.value == '#eb5a46') { this.style.cssText = 'background-color: #eb5a46;' }
-    else if (this.value == '#61bd4f') { this.style.cssText = 'background-color: #61bd4f;' }
+    if (this.value == '#f2d600') {
+        this.style.cssText = 'background-color: #f2d600;'
+    } else if (this.value == '#0079bf') {
+        this.style.cssText = 'background-color: #0079bf;'
+    } else if (this.value == '#eb5a46') {
+        this.style.cssText = 'background-color: #eb5a46;'
+    } else if (this.value == '#61bd4f') {
+        this.style.cssText = 'background-color: #61bd4f;'
+    }
 })
 
 let draggedItem = null;
+
 function dragNdrop() {
     const items = document.querySelectorAll('.newCard');
     const lists = document.querySelectorAll('.footer-box');
@@ -258,6 +333,8 @@ function dragNdrop() {
         const item = items[i];
         item.addEventListener('mousedown', () => {
             draggedItem = item;
+            console.log('item', item);
+
         })
         item.addEventListener('mouseup', () => {
             draggedItem = null;
@@ -279,21 +356,24 @@ function dragNdrop() {
                 this.append(draggedItem);
                 if (this.id == 'inprogress') {
                     if (item === draggedItem) {
-                        cardArray[i].position = `${this.id}`;
+                        cardArray[item.id.slice(8)].position = `${this.id}`;
+                        console.log('server');
                         localUpdate();
                         return
                     }
                 }
                 if (this.id == 'done') {
                     if (item === draggedItem) {
-                        cardArray[i].position = `${this.id}`;
+                        cardArray[item.id.slice(8)].position = `${this.id}`;
+                        console.log('server');
                         localUpdate();
                         return
                     }
                 }
                 if (this.id == 'add') {
                     if (item === draggedItem) {
-                        cardArray[i].position = `${this.id}`;
+                        cardArray[item.id.slice(8)].position = `${this.id}`;
+                        console.log('server');
                         localUpdate();
                         return
                     }
@@ -303,47 +383,90 @@ function dragNdrop() {
     }
 }
 
+// удаление всех блоков в done, очищение массива
+document.getElementById('delete-all-button').addEventListener('click', () => {
+    previousCardArray = [...cardArray];
 
-
-
-
-
-
-
-
-
-
-// удаление всех блоков, очищение массива
-// document.getElementById('delete-all-button').addEventListener('click', () => {
-//     cardArray = [];
-//     id = 0;
-//     todoItemsElems = [];
-//     htmlText()
-// })
+    // for (let i = 0; i < cardArray.length; i++) {
+    //     if (cardArray[i].position == 'done') cardArray.splice(i,1);
+    // }
+    cardArray = cardArray.filter(item => item.position !== 'done');
+    console.log('previousArray', previousCardArray);
+    console.log('Array', cardArray);
+    htmlText('delete all');
+})
 // поиск
-// search.addEventListener('keyup', () => {
-//     for (let i = 0; i < cardArray.length; i++) {
-//         if (cardArray[i].text == search.value) {
-//             todoItemsElems[i].classList.add('block');
-//             todoItemsElems[i].classList.remove('none');
-//         }
-//         else {
-//             todoItemsElems[i].classList.add('none');
-//             todoItemsElems[i].classList.remove('block');
-//         }
-//         if (search.value == 0) {
-//             todoItemsElems[i].classList.add('block');
-//             todoItemsElems[i].classList.remove('none');
-//         }
-//     }
-// })
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode == 13) {
+        for (let i = 0; i < cardArray.length; i++) {
+            if (cardArray[i].title == document.getElementById('search').value) {
+                todoItemsElems[i].classList.add('block');
+                todoItemsElems[i].classList.remove('none');
+            } else {
+                todoItemsElems[i].classList.add('none');
+                todoItemsElems[i].classList.remove('block');
+            }
+            console.log('value', document.getElementById('search').value);
+            console.log('title', cardArray[i].title);
+            console.log(todoItemsElems[i]);
+        }
+    }
+})
+document.getElementById('search').addEventListener('input', () => {
+    for (let i = 0; i < cardArray.length; i++) {
+        if (document.getElementById('search').value == '') {
+            todoItemsElems[i].classList.add('block');
+            todoItemsElems[i].classList.remove('none');
+        }
+    }
+})
+// модальное окно для смены фона
+document.getElementById('settings-button').addEventListener('click', () => {
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(0rem)';
+    document.getElementById('board-menu-box').style.display = 'flex';
+    document.getElementById('background-scroll-box').style.transform = 'translateX(20rem)';
+    document.getElementById('background-images-scroll-box').style.display = 'flex';
+    document.getElementById('background-colors-scroll-box').style.display = 'flex';
+    document.getElementById('background-scroll-box').style.display = 'flex';
+    document.getElementById('background-colors-scroll-box').style.transform = 'translateX(20rem)';
+    document.getElementById('background-images-scroll-box').style.transform = 'translateX(20rem)';
+})
+document.getElementById('close-button-board-menu').addEventListener('click', () => {
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+})
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode == 27) {
+        document.getElementById('quick-card-editor').style.display = 'none';
+        document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+    };
+})
+document.getElementById('board-menu-box').addEventListener('click', () => {
+    document.getElementById('background-scroll-box').style.transform = 'translateX(0rem)';
+    document.getElementById('board-menu-box').style.display = 'none'
+})
 
-// функция управления счетчиками
-// function counters() {
-//     let c = 0;
-//     for (let i = 0; i < cardArray.length; i++) {
-//         if (cardArray[i].isChecked) c++
-//     }
-//     counterAll.innerText = `All: ${todoItemsElems.length}`;
-//     complete.innerText = `Completed: ${c}`;
-// }
+document.getElementById('background-color-small-box').addEventListener('click', () => {
+    document.getElementById('background-scroll-box').style.display = 'none';
+    document.getElementById('background-images-scroll-box').style.display = 'none';
+    document.getElementById('background-colors-scroll-box').style.transform = 'translateX(0rem)';
+})
+
+document.getElementById('background-image-small-box').addEventListener('click', () => {
+    document.getElementById('background-scroll-box').style.display = 'none';
+    document.getElementById('background-colors-scroll-box').style.display = 'none';
+    document.getElementById('background-images-scroll-box').style.transform = 'translateX(0rem)';
+})
+
+document.getElementById('background-colors-scroll-box').addEventListener('click', function (e) {
+    document.body.style.backgroundImage = 'none';
+    document.body.style.backgroundColor = `${e.target.id}`;
+    backgroundColor = [JSON.stringify(e.target.id)];
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+    localStorage.setItem('bg', backgroundColor)
+})
+document.getElementById('background-images-scroll-box').addEventListener('click', function (e) {
+    document.body.style.backgroundImage = `${e.target.style.backgroundImage}`;
+    backgroundColor = [JSON.stringify(e.target.style.backgroundImage)];
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+    localStorage.setItem('bg', backgroundColor)
+})

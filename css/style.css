@@ -4,18 +4,31 @@
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-body,
 html {
   margin: 0;
-  height: 100%;
-  background-color: #0079bf;
+}
+html::-webkit-scrollbar {
+  width: 1rem;
+}
+html::-webkit-scrollbar-track {
+  background-color: #ecedf0;
+}
+html::-webkit-scrollbar-thumb {
+  background-color: #cfd3da;
+  border-radius: 0.2142857143rem;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-size: cover;
 }
 
 header {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 2rem;
-  background-color: #026aa7;
+  background-color: rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   align-items: center;
@@ -82,22 +95,6 @@ header .header_tools input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.yellow {
-  background-color: #f2d600;
-}
-
-.red {
-  background-color: #eb5a46;
-}
-
-.blue {
-  background-color: #0079bf;
-}
-
-.green {
-  background-color: #61bd4f;
-}
-
 main {
   border-top: 1px solid transparent;
 }
@@ -106,7 +103,7 @@ main .wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 32px;
+  gap: 4rem;
 }
 main .wrapper .list-wrapper {
   width: 18.7rem;
@@ -141,6 +138,7 @@ main .wrapper .list-wrapper > button {
   border-radius: 0.2142857143rem;
   color: #172b4d;
   font-size: 2rem;
+  cursor: pointer;
   background-color: transparent;
   margin: auto;
   border: none;
@@ -383,13 +381,13 @@ main .wrapper .list-wrapper .newCard .card-footer .card-date {
   width: 16rem;
   height: 15rem;
   resize: none;
-  font-size: 1rem;
   outline: none;
-  border-radius: 0.2142857143rem;
-  cursor: pointer;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  font-size: 1rem;
+  border-radius: 0.2142857143rem;
+  cursor: pointer;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 #quick-card-editor #quick-card-editor-card #quick-card-newCard .quick-card-text::-webkit-scrollbar {
@@ -451,4 +449,189 @@ main .wrapper .list-wrapper .newCard .card-footer .card-date {
 }
 #quick-card-editor #quick-card-editor-card #card-editor-button-confirm:hover {
   background-color: #2d86ba;
+}
+
+.none {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+#board-menu-wrapper {
+  width: 20rem;
+  transform: translateX(20rem);
+  box-shadow: 0 12px 24px -6px #091e4240, 0 0 0 1px #091e4214;
+  background-color: #f4f5f7;
+  transition-duration: 0.1s;
+  transition-property: transform, width;
+  transition-timing-function: ease-in;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
+}
+#board-menu-wrapper hr {
+  background-color: #091e4221;
+  border: 0;
+  height: 0.01rem;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+}
+#board-menu-wrapper .board-menu-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 3rem;
+  padding: 0.5rem;
+}
+#board-menu-wrapper .board-menu-header button {
+  width: 2rem;
+  cursor: pointer;
+  border-radius: 0.2142857143rem;
+  color: #172b4d;
+  font-size: 1.3rem;
+  background-color: transparent;
+  border: none;
+  transition: 0.2s;
+}
+#board-menu-wrapper .board-menu-header button:hover {
+  background-color: #091e4214;
+}
+#board-menu-wrapper .board-menu-list {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+#board-menu-wrapper .board-menu-list .small-box {
+  background-size: cover;
+  border-radius: 0.5rem;
+  height: 6rem;
+  width: 8.5rem;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#board-menu-wrapper .board-menu-list .small-box:hover {
+  opacity: 0.8;
+}
+#board-menu-wrapper .board-menu-list #board-menu-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.2142857143rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+#board-menu-wrapper .board-menu-list #board-menu-box #mini-display-bg {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: #0079bf;
+  border-radius: 0.2142857143rem;
+  display: inline-block;
+}
+#board-menu-wrapper .board-menu-list #board-menu-box p {
+  margin: 0;
+}
+#board-menu-wrapper .board-menu-list #board-menu-box:hover {
+  background-color: #091e4214;
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  height: 9rem;
+  gap: 1.5rem;
+  transition-duration: 0.1s;
+  transition-property: transform, width;
+  transition-timing-function: ease-in;
+  transform: translateX(20rem);
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box {
+  cursor: pointer;
+  height: 10rem;
+  width: 12rem;
+  border-radius: 0.2142857143rem;
+  text-align: center;
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box #background-color-small-box,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box #background-color-small-box {
+  background-image: url(../assets/images/color-bg.jpg);
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box #background-color-small-box:hover,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box #background-color-small-box:hover {
+  opacity: 0.8;
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box #background-image-small-box,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box #background-image-small-box {
+  background-image: url(../assets/images/image-bg.jpg);
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box #background-image-small-box:hover,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box #background-image-small-box:hover {
+  opacity: 0.8;
+}
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-image-box p,
+#board-menu-wrapper .board-menu-list #background-scroll-box .background-color-box p {
+  color: #172b4d;
+  margin: 0;
+}
+#board-menu-wrapper .board-menu-list #background-colors-scroll-box,
+#board-menu-wrapper .board-menu-list #background-images-scroll-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  transition-duration: 0.1s;
+  transition-property: transform, width;
+  transition-timing-function: ease-in;
+  transform: translateX(20rem);
+  resize: none;
+  outline: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#board-menu-wrapper .board-menu-list #background-images-scroll-box {
+  max-height: 57rem;
+}
+#board-menu-wrapper .board-menu-list #background-images-scroll-box::-webkit-scrollbar {
+  width: 0.5rem;
+}
+#board-menu-wrapper .board-menu-list #background-images-scroll-box::-webkit-scrollbar-track {
+  background-color: #ecedf0;
+}
+#board-menu-wrapper .board-menu-list #background-images-scroll-box::-webkit-scrollbar-thumb {
+  background-color: #cfd3da;
+  border-radius: 0.2142857143rem;
+}
+
+.yellow {
+  background-color: #f2d600;
+}
+
+.red {
+  background-color: #eb5a46;
+}
+
+.blue {
+  background-color: #0079bf;
+}
+
+.green {
+  background-color: #61bd4f;
+}
+
+.purple {
+  background-color: #89609e;
+}
+
+.pink {
+  background-color: #cd5a91;
 }
