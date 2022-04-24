@@ -421,9 +421,6 @@ document.getElementById('delete-all-button').addEventListener('click', () => {
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 13) {
         for (let i = 0; i < cardArray.length; i++) {
-            console.log(cardArray[i].title[0]+cardArray[i].title[1]);
-            console.log(cardArray[i].title[1]);
-            console.log(cardArray[i].title[2]);
             if (cardArray[i].title[0] == document.getElementById('search').value || cardArray[i].title[1] == document.getElementById('search').value || cardArray[i].title[2] == document.getElementById('search').value || cardArray[i].title == document.getElementById('search').value || cardArray[i].title[0]+cardArray[i].title[1] == document.getElementById('search').value) {
                 [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.add('block');
                 [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.remove('none');
