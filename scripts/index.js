@@ -331,12 +331,12 @@ document.getElementById('quick-card-editor-close-card').addEventListener('click'
 })
 // вписывает в массив новые данные и закрывает окно редактирования
 const confirmChangesCard = index => {
-        cardArray[index].title = document.getElementById(`title-description`).value;
-        cardArray[index].text = document.getElementById(`card-text`).value;
-        cardArray[index].user = document.getElementById('quick-card-user').value;
-        cardArray[index].point = document.getElementById('quick-card-point').value;
-        document.getElementById('quick-card-editor').style.display = 'none';
-        htmlText();
+    cardArray[index].title = document.getElementById(`title-description`).value;
+    cardArray[index].text = document.getElementById(`card-text`).value;
+    cardArray[index].user = document.getElementById('quick-card-user').value;
+    cardArray[index].point = document.getElementById('quick-card-point').value;
+    document.getElementById('quick-card-editor').style.display = 'none';
+    htmlText();
 }
 document.getElementById('point-select').addEventListener('change', function () {
     if (this.value == '#f2d600') {
@@ -387,7 +387,7 @@ function dragNdrop() {
                 this.append(draggedItem);
                 if (this.id == 'inprogress') {
                     if (item === draggedItem) {
-                        cardArray[item.plit('')(8)].position = `${this.id}`;
+                        cardArray[item.id.slice('')(8)].position = `${this.id}`;
                         localUpdate();
                         return
                     }
@@ -421,12 +421,14 @@ document.getElementById('delete-all-button').addEventListener('click', () => {
 document.addEventListener('keydown', function (e) {
     if (e.keyCode == 13) {
         for (let i = 0; i < cardArray.length; i++) {
-            if (cardArray[i].title[0] == document.getElementById('search').value || cardArray[i].title[1] == document.getElementById('search').value || cardArray[i].title[2] == document.getElementById('search').value || cardArray[i].title == document.getElementById('search').value || cardArray[i].title[0]+cardArray[i].title[1] == document.getElementById('search').value) {
-                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.add('block');
-                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.remove('none');
+            let x;
+            cardArray[i].title.split('').forEach(item=>x=item);
+            if (cardArray[i].title[0] == document.getElementById('search').value || cardArray[i].title[1] == document.getElementById('search').value || cardArray[i].title[2] == document.getElementById('search').value || cardArray[i].title == document.getElementById('search').value || cardArray[i].title[0] + cardArray[i].title[1] + cardArray[i].title[2] == document.getElementById('search').value || cardArray[i].title[0] + cardArray[i].title[1] == document.getElementById('search').value || x == document.getElementById('search').value) {
+                [...todoItemsElems].find(item => item.id == `newCard-${i}`).classList.add('block');
+                [...todoItemsElems].find(item => item.id == `newCard-${i}`).classList.remove('none');
             } else {
-                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.add('none');
-                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.remove('block');
+                [...todoItemsElems].find(item => item.id == `newCard-${i}`).classList.add('none');
+                [...todoItemsElems].find(item => item.id == `newCard-${i}`).classList.remove('block');
             }
         }
     }
