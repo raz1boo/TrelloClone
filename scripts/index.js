@@ -1,5 +1,6 @@
 // верстка
 document.body.innerHTML = `
+<div id='bg-image-color'></div>
 <header>
 <a href="#" class="logo"></a>
 <div class="header_tools">
@@ -68,7 +69,24 @@ document.body.innerHTML = `
 <div class="board-menu-list">
     <div id="board-menu-box">
         <div id="mini-display-bg"></div>
-    <p>Change background..</p>
+        <p>Change background..</p>
+    </div>
+    <div id="background-preview-scroll-box">
+        <div class="bg-scroll-box-head">
+            <div id="bg-scroll-box-head_image-box"><img src="./assets/images/board-preview.svg"></div>
+        </div>
+        <div id="bg-scroll-box-purpose">
+            <p>Background</p>
+            <div id="background-images-purpose"></div>
+            <div id="background-colors-purpose">
+                <div id='bg-work-place-colors-purpose'>
+                    <div class="color-purpose-box yellow" id='#f2d600'></div>
+                    <div class="color-purpose-box green" id='#61bd4f'></div>
+                    <div class="color-purpose-box purple" id='#89609E'></div>
+                </div>
+                <div id="three-dots"><svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="currentColor"></path></svg></div>
+            </div>
+        </div>
     </div>
     <div id="background-scroll-box">
         <div class="background-image-box">
@@ -104,9 +122,15 @@ let date = `${new Date().getDate()}.${new Date().getMonth() + 1}.${new Date().ge
 let id = 0;
 let cardArray = [];
 let previousCardArray = [];
-let backgroundColor = JSON.parse(localStorage.getItem('bg')) || ["#0079bf"];
-document.body.style.backgroundColor = `${backgroundColor}`;
-document.body.style.backgroundImage = `${backgroundColor}`;
+let backgroundColor = JSON.parse(localStorage.getItem('bg')) || "#0079bf";
+// при перезагрузке страницы задает бэкграунды
+document.getElementById('bg-image-color').style.backgroundColor = `${backgroundColor}`;
+document.getElementById('bg-image-color').style.backgroundImage = `${backgroundColor}`;
+document.getElementById('bg-scroll-box-head_image-box').style.backgroundImage = `${backgroundColor}`;
+document.getElementById('bg-scroll-box-head_image-box').style.backgroundColor = `${backgroundColor}`;
+document.getElementById('mini-display-bg').style.backgroundImage = `${backgroundColor}`;
+document.getElementById('mini-display-bg').style.backgroundColor = `${backgroundColor}`;
+// при обновлении страницы обнуляет массив и записывает его заново
 async function getData() {
     await fetch('https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array')
         .then(response => response.json())
@@ -116,7 +140,6 @@ async function getData() {
                 cardArray.push(i);
             })
             htmlText();
-            console.log('getData', cardArray);
         })
 }
 // Создание объекта с нужными значениями
@@ -149,7 +172,7 @@ const createTemplate = (inp, index) => {
     </div>
 `
 }
-//
+// перезаписывает информацию на сервере
 const localUpdate = async (flag) => {
     let condition = flag ? previousCardArray.length : cardArray.length;
 
@@ -157,7 +180,7 @@ const localUpdate = async (flag) => {
         await fetch(`https://62585363e4e0b731428afe6e.mockapi.io/tms/users/array/${i}`, {
                 method: 'DELETE',
             })
-            .then(response => console.log('response', response.json()))
+            .then(response => response.json())
     }
 
     for (let i = 0; i < cardArray.length; i++) {
@@ -168,24 +191,26 @@ const localUpdate = async (flag) => {
             },
             body: JSON.stringify(cardArray[i])
         })
-        console.log('localUpdateLength', cardArray.length);
-        console.log('post', i);
     }
 };
-
+// вставляет пользователей в select
 function printUsers(json) {
     json.forEach(i => {
         document.getElementById('user-select').innerHTML += `<option>${i.name}</option>`
         document.getElementById('quick-card-user').innerHTML += `<option>${i.name}</option>`
     })
 }
-
-function printBgs(json){
-    json.forEach(i=>{
-        document.getElementById('background-images-scroll-box').innerHTML += `<div class='small-box' style='background-image: url(${i.download_url})'></div>`
+// вставляет в блок принятые фотки
+function printBgs(json) {
+    json.forEach(i => {
+        document.getElementById('background-images-scroll-box').innerHTML += `<div class='small-box' style='background-image: url(${i.download_url})'></div>`;
     })
+    document.getElementById('background-images-purpose').innerHTML += `<div class='image-purpose-box' style='background-image: url(${json[Math.floor(Math.random() * 100) + 1].download_url})'></div>`
+    document.getElementById('background-images-purpose').innerHTML += `<div class='image-purpose-box' style='background-image: url(${json[Math.floor(Math.random() * 100) + 1].download_url})'></div>`
+    document.getElementById('background-images-purpose').innerHTML += `<div class='image-purpose-box' style='background-image: url(${json[Math.floor(Math.random() * 100) + 1].download_url})'></div>`
+    document.getElementById('background-images-purpose').innerHTML += `<div class='image-purpose-box' style='background-image: url(${json[Math.floor(Math.random() * 100) + 1].download_url})'></div>`
 }
-
+// запрашивает на сервере пользователей и фотки
 function getUsers() {
     fetch('https://jsonplaceholder.typicode.com/users/')
         .then(response => response.json())
@@ -205,7 +230,6 @@ const htmlText = (flag) => {
     addFooter.innerText = '';
     inprogressFooter.innerText = '';
     doneFooter.innerText = '';
-    console.log('htmlTextLength', cardArray.length);
     if (cardArray.length > 0) {
         cardArray.forEach((item, index) => {
             if (cardArray[index].position == 'add') addFooter.innerHTML += createTemplate(item, index);
@@ -237,10 +261,12 @@ document.getElementById('confirm-form').addEventListener('click', () => {
     }
     htmlText();
 })
+// нажатие на + 
 document.getElementById('add-todo-button').addEventListener('click', () => {
     document.getElementById('description-box').style.display = 'block';
     document.getElementById('add-todo-button').style.display = 'none';
 })
+// нажатие на close
 document.getElementById('close-form').addEventListener('click', (e) => {
     document.getElementById('description-box').style.display = 'none';
     titleText.value = '';
@@ -248,19 +274,17 @@ document.getElementById('close-form').addEventListener('click', (e) => {
     input.style.height = '60px';
     document.getElementById('add-todo-button').style.display = 'block';
 })
+// изменение высоты блока ввода описания
 document.querySelector('textarea').addEventListener('input', function () {
     this.style.cssText = 'height:' + this.scrollHeight + 'px';
 })
-// функция удаляет блок, удаляет из массива этот блок
+// функция удаляет блок
 const deleteTask = index => {
     previousCardArray = [...cardArray];
-    console.log('previousCardArray', previousCardArray);
     cardArray.splice(index, 1);
-    // if (cardArray.length == 0) id = 0;
-    console.log('deleteTaskLength', cardArray.length);
     htmlText('delete');
 }
-
+// вычесление координат элемента
 function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     return {
@@ -268,9 +292,11 @@ function getCoords(elem) {
         left: Math.round(box.left + pageXOffset)
     };
 }
+// изменение блока
 const editTask = index => {
-    document.getElementById('quick-card-editor-card').style.top = `${getCoords(todoItemsElems[index]).top - 15}px`;
-    document.getElementById('quick-card-editor-card').style.left = `${getCoords(todoItemsElems[index]).left}px`;
+    // выставляет блок эдита по координатам блока-родителя(который мы пытаемся изменить)
+    document.getElementById('quick-card-editor-card').style.top = `${getCoords([...todoItemsElems].find(i=>i.id == `newCard-${index}`)).top - 15}px`;
+    document.getElementById('quick-card-editor-card').style.left = `${getCoords([...todoItemsElems].find(i=>i.id == `newCard-${index}`)).left}px`;
     if (document.getElementById('card-editor-button-confirm')) {
         document.getElementById('card-editor-button-confirm').remove()
     }
@@ -281,9 +307,10 @@ const editTask = index => {
     document.getElementById('quick-card-date').innerText = `${cardArray[index].date}`;
     document.getElementById('quick-card-newCard').style.boxShadow = 'none';
     document.getElementById('quick-card-point').style.backgroundColor = `${cardArray[index].point}`;
+    document.getElementById('quick-card-point').value = `${cardArray[index].point}`;
     document.getElementById('quick-card-point').addEventListener('change', function () {
         if (this.value == '#f2d600') {
-            this.style.cssText = 'background-color: #f2d600;'
+            this.style.cssText = 'background-color: #f2d600;';
         } else if (this.value == '#0079bf') {
             this.style.cssText = 'background-color: #0079bf;'
         } else if (this.value == '#eb5a46') {
@@ -298,19 +325,18 @@ const editTask = index => {
 document.getElementById('quick-card-editor-close-icon').addEventListener('click', () => {
     document.getElementById('quick-card-editor').style.display = 'none';
 })
+// при рандомном клике по экрану закрывает окно редактирования
 document.getElementById('quick-card-editor-close-card').addEventListener('click', () => {
     document.getElementById('quick-card-editor').style.display = 'none';
 })
 // вписывает в массив новые данные и закрывает окно редактирования
 const confirmChangesCard = index => {
-    if (document.getElementById(`title-description`).value && document.getElementById(`card-text`).value) {
         cardArray[index].title = document.getElementById(`title-description`).value;
         cardArray[index].text = document.getElementById(`card-text`).value;
         cardArray[index].user = document.getElementById('quick-card-user').value;
         cardArray[index].point = document.getElementById('quick-card-point').value;
         document.getElementById('quick-card-editor').style.display = 'none';
         htmlText();
-    }
 }
 document.getElementById('point-select').addEventListener('change', function () {
     if (this.value == '#f2d600') {
@@ -323,7 +349,13 @@ document.getElementById('point-select').addEventListener('change', function () {
         this.style.cssText = 'background-color: #61bd4f;'
     }
 })
-
+// прекращает работу TAB(от багов)
+document.addEventListener('keydown', function (e) {
+    if (e.which == 9) {
+        e.preventDefault();
+    }
+});
+// dragNdrop
 let draggedItem = null;
 
 function dragNdrop() {
@@ -333,7 +365,6 @@ function dragNdrop() {
         const item = items[i];
         item.addEventListener('mousedown', () => {
             draggedItem = item;
-            console.log('item', item);
 
         })
         item.addEventListener('mouseup', () => {
@@ -357,7 +388,6 @@ function dragNdrop() {
                 if (this.id == 'inprogress') {
                     if (item === draggedItem) {
                         cardArray[item.id.slice(8)].position = `${this.id}`;
-                        console.log('server');
                         localUpdate();
                         return
                     }
@@ -365,7 +395,6 @@ function dragNdrop() {
                 if (this.id == 'done') {
                     if (item === draggedItem) {
                         cardArray[item.id.slice(8)].position = `${this.id}`;
-                        console.log('server');
                         localUpdate();
                         return
                     }
@@ -373,7 +402,6 @@ function dragNdrop() {
                 if (this.id == 'add') {
                     if (item === draggedItem) {
                         cardArray[item.id.slice(8)].position = `${this.id}`;
-                        console.log('server');
                         localUpdate();
                         return
                     }
@@ -386,13 +414,7 @@ function dragNdrop() {
 // удаление всех блоков в done, очищение массива
 document.getElementById('delete-all-button').addEventListener('click', () => {
     previousCardArray = [...cardArray];
-
-    // for (let i = 0; i < cardArray.length; i++) {
-    //     if (cardArray[i].position == 'done') cardArray.splice(i,1);
-    // }
     cardArray = cardArray.filter(item => item.position !== 'done');
-    console.log('previousArray', previousCardArray);
-    console.log('Array', cardArray);
     htmlText('delete all');
 })
 // поиск
@@ -400,15 +422,12 @@ document.addEventListener('keydown', function (e) {
     if (e.keyCode == 13) {
         for (let i = 0; i < cardArray.length; i++) {
             if (cardArray[i].title == document.getElementById('search').value) {
-                todoItemsElems[i].classList.add('block');
-                todoItemsElems[i].classList.remove('none');
+                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.add('block');
+                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.remove('none');
             } else {
-                todoItemsElems[i].classList.add('none');
-                todoItemsElems[i].classList.remove('block');
+                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.add('none');
+                [...todoItemsElems].find(item=>item.id == `newCard-${i}`).classList.remove('block');
             }
-            console.log('value', document.getElementById('search').value);
-            console.log('title', cardArray[i].title);
-            console.log(todoItemsElems[i]);
         }
     }
 })
@@ -424,9 +443,11 @@ document.getElementById('search').addEventListener('input', () => {
 document.getElementById('settings-button').addEventListener('click', () => {
     document.getElementById('board-menu-wrapper').style.transform = 'translateX(0rem)';
     document.getElementById('board-menu-box').style.display = 'flex';
+    document.getElementById('background-preview-scroll-box').style.transform = 'translateX(20rem)';
     document.getElementById('background-scroll-box').style.transform = 'translateX(20rem)';
     document.getElementById('background-images-scroll-box').style.display = 'flex';
     document.getElementById('background-colors-scroll-box').style.display = 'flex';
+    document.getElementById('background-preview-scroll-box').style.display = 'flex';
     document.getElementById('background-scroll-box').style.display = 'flex';
     document.getElementById('background-colors-scroll-box').style.transform = 'translateX(20rem)';
     document.getElementById('background-images-scroll-box').style.transform = 'translateX(20rem)';
@@ -441,7 +462,7 @@ document.addEventListener('keydown', function (e) {
     };
 })
 document.getElementById('board-menu-box').addEventListener('click', () => {
-    document.getElementById('background-scroll-box').style.transform = 'translateX(0rem)';
+    document.getElementById('background-preview-scroll-box').style.transform = 'translateX(0rem)';
     document.getElementById('board-menu-box').style.display = 'none'
 })
 
@@ -458,15 +479,48 @@ document.getElementById('background-image-small-box').addEventListener('click', 
 })
 
 document.getElementById('background-colors-scroll-box').addEventListener('click', function (e) {
-    document.body.style.backgroundImage = 'none';
-    document.body.style.backgroundColor = `${e.target.id}`;
+    document.getElementById('bg-image-color').style.backgroundImage = 'none';
+    document.getElementById('bg-image-color').style.backgroundColor = `${e.target.id}`;
+    document.getElementById('mini-display-bg').style.backgroundImage = 'none';
+    document.getElementById('mini-display-bg').style.backgroundColor = `${e.target.id}`;
     backgroundColor = [JSON.stringify(e.target.id)];
     document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
     localStorage.setItem('bg', backgroundColor)
 })
 document.getElementById('background-images-scroll-box').addEventListener('click', function (e) {
-    document.body.style.backgroundImage = `${e.target.style.backgroundImage}`;
+    document.getElementById('bg-image-color').style.backgroundImage = `${e.target.style.backgroundImage}`;
+    backgroundColor = [JSON.stringify(e.target.style.backgroundImage)];
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+    document.getElementById('mini-display-bg').style.backgroundImage = `${e.target.style.backgroundImage}`;
+    localStorage.setItem('bg', backgroundColor)
+})
+
+document.getElementById('three-dots').addEventListener('click', () => {
+    document.getElementById('background-preview-scroll-box').style.display = 'none';
+    document.getElementById('background-scroll-box').style.transform = 'translateX(0rem)';
+})
+
+document.getElementById('bg-work-place-colors-purpose').addEventListener('click', function (e) {
+    document.getElementById('bg-image-color').style.backgroundImage = 'none';
+    document.getElementById('mini-display-bg').style.backgroundImage = 'none';
+    document.getElementById('mini-display-bg').style.backgroundColor = `${e.target.id}`;
+    document.getElementById('bg-image-color').style.backgroundColor = `${e.target.id}`;
+    backgroundColor = [JSON.stringify(e.target.id)];
+    document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
+    localStorage.setItem('bg', backgroundColor)
+})
+document.getElementById('background-images-purpose').addEventListener('click', function (e) {
+    document.getElementById('bg-image-color').style.backgroundImage = `${e.target.style.backgroundImage}`;
+    document.getElementById('mini-display-bg').style.backgroundImage = `${e.target.style.backgroundImage}`;
     backgroundColor = [JSON.stringify(e.target.style.backgroundImage)];
     document.getElementById('board-menu-wrapper').style.transform = 'translateX(20rem)';
     localStorage.setItem('bg', backgroundColor)
+})
+
+document.getElementById('bg-scroll-box-purpose').addEventListener('mouseover', function (e) {
+    if (e.target.style.backgroundImage !== '') document.getElementById('bg-scroll-box-head_image-box').style.backgroundImage = `${e.target.style.backgroundImage}`;
+    if (e.target.id == '#61bd4f' || e.target.id == '#f2d600' || e.target.id == '#89609E') {
+        document.getElementById('bg-scroll-box-head_image-box').style.backgroundImage = 'none';
+        document.getElementById('bg-scroll-box-head_image-box').style.backgroundColor = `${e.target.id}`;
+    }
 })
