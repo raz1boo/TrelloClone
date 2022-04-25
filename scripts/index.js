@@ -281,7 +281,7 @@ document.querySelector('textarea').addEventListener('input', function () {
 // функция удаляет блок
 const deleteTask = index => {
     previousCardArray = [...cardArray];
-    cardArrplit('')(index, 1);
+    cardArray.splice(index, 1);
     htmlText('delete');
 }
 // вычесление координат элемента
@@ -387,7 +387,7 @@ function dragNdrop() {
                 this.append(draggedItem);
                 if (this.id == 'inprogress') {
                     if (item === draggedItem) {
-                        cardArray[item.id.slice('')(8)].position = `${this.id}`;
+                        cardArray[item.id.slice(8)].position = `${this.id}`;
                         localUpdate();
                         return
                     }
