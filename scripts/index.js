@@ -5,7 +5,7 @@ document.body.innerHTML = `
 <a href="#" class="logo"></a>
 <div class="header_tools">
     <input type="text" placeholder="Search.." id='search' autocomplete="off">
-    <button id='settings-button'><img src="../assets/icons/gear.png"></button>
+    <button id='settings-button'><img src="./assets/icons/gear.png"></button>
 </div>
 </header>
 <main>
@@ -33,7 +33,7 @@ document.body.innerHTML = `
         <div class="footer-box" id='inprogress'></div>
     </div>
     <div class="list-wrapper done">
-        <div class="head-box">Done<button id="delete-all-button"><img src="../assets/icons/delete.png"></button>
+        <div class="head-box">Done<button id="delete-all-button"><img src="./assets/icons/delete.png"></button>
         </div>
         <div class="footer-box" id='done'></div>
     </div>
@@ -160,7 +160,7 @@ const createTemplate = (inp, index) => {
         <div class='card-header'>
             <div class="title-description">${inp.title}</div>
             <div class='title-header-buttons'>
-                <button onclick='editTask(${index})' class='button'><img src='../assets/icons/edit.png'></button>
+                <button onclick='editTask(${index})' class='button'><img src='./assets/icons/edit.png'></button>
                 <button onclick='deleteTask(${index})' class='button'>✖</button>
             </div>
         </div>
